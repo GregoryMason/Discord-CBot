@@ -97,6 +97,22 @@ static void rest_action_get_request(struct rest_action* ra, char* endpoint) {
 	printf("%s\n", response.resp);
 }
 
+static void rest_action_post_request(struct rest_action* ra, char* endpoint) {
+	printf("--Not yet implemented--\n");
+}
+
+static void rest_action_patch_request(struct rest_action* ra, char* endpoint) {
+	printf("--Not yet implemented--\n");
+}
+
+static void rest_action_delete_request(struct rest_action* ra, char* endpoint) {
+	printf("--Not yet implemented--\n");
+}
+
+static void rest_action_put_request(struct rest_action* ra, char* endpoint) {
+	printf("--Not yet implemented--\n");
+}
+
 void rest_action_make_request(struct rest_action* ra, char* endpoint, restActionHeader httpHeader) {
 	if (!ra) { fprintf(stderr, "trying to make request with NULL rest_action"); return; }
 	if (!endpoint) { fprintf(stderr, "trying to make request with invalid endpoint"); return; }
@@ -105,8 +121,20 @@ void rest_action_make_request(struct rest_action* ra, char* endpoint, restAction
 		case RESTACTION_GET:
 			rest_action_get_request(ra, endpoint);
 			break;
+		case RESTACTION_POST:
+			rest_action_post_request(ra, endpoint);
+			break;
+		case RESTACTION_PATCH:
+			rest_action_patch_request(ra, endpoint);
+			break;
+		case RESTACTION_DELETE:
+			rest_action_delete_request(ra, endpoint);
+			break;
+		case RESTACTION_PUT:
+			rest_action_put_request(ra, endpoint);
+			break;
 		default:
-			printf("Unrecognised or non-implemented header");
+			fprintf(stderr, "Unrecognised header for request: %d\n", httpHeader);
 	}
 }
 
