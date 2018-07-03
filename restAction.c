@@ -79,11 +79,9 @@ static void perform_request(CURL* curl) {
 	if(res != CURLE_OK) fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 }
 
-void rest_action_get_guilds(struct rest_action* ra) {
-	if (!ra) { fprintf(stderr, "trying to get guild with NULL rest_action"); return; }
-
+static void rest_action_get_request(struct rest_action* ra, char* endpoint) {
 	//Build and set target URL
-	char* targetURL = build_url("users/@me/guilds");
+	char* targetURL = build_url(endpoint);
 	curl_easy_setopt(ra->curl, CURLOPT_URL, targetURL);
 	free(targetURL);
 
@@ -98,6 +96,20 @@ void rest_action_get_guilds(struct rest_action* ra) {
 
 	printf("%s\n", response.resp);
 }
+
+void rest_action_make_request(struct rest_action* ra, char* endpoint, restActionHeader httpHeader) {
+	if (!ra) { fprintf(stderr, "trying to make request with NULL rest_action"); return; }
+	if (!endpoint) { fprintf(stderr, "trying to make request with invalid endpoint"); return; }
+
+	switch (httpHeader) {
+		case RESTACTION_GET:
+			rest_action_get_request(ra, endpoint);
+			break;
+		default:
+			printf("Unrecognised or non-implemented header");
+	}
+}
+
 
 void rest_action_cleanup(struct rest_action* ra) {
 	curl_easy_cleanup(ra->curl);

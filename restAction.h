@@ -22,11 +22,10 @@ typedef enum {
 struct rest_action {
 	CURL* curl;
 	struct curl_slist* headers;
-	restActionHeader httpHeader;
 };
 
 struct rest_action* rest_action_init(struct rest_action* ra);
 
-void rest_action_get_guilds(struct rest_action* ra);
+void rest_action_make_request(struct rest_action* ra, char* endpoint, restActionHeader httpHeader);
 
 void rest_action_cleanup(struct rest_action* ra);
