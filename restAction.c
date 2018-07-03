@@ -46,10 +46,34 @@ static char* build_url(char* endpoint) {
 	return endPointURL;
 }
 
+
+struct RespStruct {
+	char* resp;
+	size_t size;
+};
+
+static size_t write_resp_callback(void* contents, size_t size, size_t nmemb, void* respPtr) {
+	size_t realSize = size * nmemb;
+	struct RespStruct* resp = (struct RespStruct*) respPtr;
+
+	char* reloc = realloc(resp->resp, realSize +1);
+	if (reloc == NULL) {
+		fprintf(stderr, "Not enough memory to realloc for response");
+		free(resp->resp);
+		return 0;
+	}
+	resp->resp = reloc;
+
+	memcpy(resp->resp, contents, realSize);
+	resp->size = realSize;
+	resp->resp[realSize] = 0;
+
+	return realSize;
+}
+
 static void perform_request(CURL* curl) {
 	//Perform the request, with res for the return code
 	CURLcode res = curl_easy_perform(curl);
-	printf("\n");
 
 	//Check if there was an error
 	if(res != CURLE_OK) fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
@@ -63,8 +87,16 @@ void rest_action_get_guilds(struct rest_action* ra) {
 	curl_easy_setopt(ra->curl, CURLOPT_URL, targetURL);
 	free(targetURL);
 
+	//Add getting the responses from curl
+	struct RespStruct response;
+	response.resp = malloc(1); response.size = 0;
+	curl_easy_setopt(ra->curl, CURLOPT_WRITEFUNCTION, write_resp_callback);
+	curl_easy_setopt(ra->curl, CURLOPT_WRITEDATA, (void*) &response);
+
 	//Run request
 	perform_request(ra->curl);
+
+	printf("%s\n", response.resp);
 }
 
 void rest_action_cleanup(struct rest_action* ra) {
