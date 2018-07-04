@@ -56,7 +56,7 @@ static size_t write_resp_callback(void* contents, size_t size, size_t nmemb, voi
 	size_t realSize = size * nmemb;
 	struct RespStruct* resp = (struct RespStruct*) respPtr;
 
-	char* reloc = realloc(resp->resp, realSize +1);
+	char* reloc = realloc(resp->resp, resp->size + realSize +1);
 	if (reloc == NULL) {
 		fprintf(stderr, "Not enough memory to realloc for response");
 		free(resp->resp);
@@ -64,9 +64,9 @@ static size_t write_resp_callback(void* contents, size_t size, size_t nmemb, voi
 	}
 	resp->resp = reloc;
 
-	memcpy(resp->resp, contents, realSize);
-	resp->size = realSize;
-	resp->resp[realSize] = 0;
+	memcpy(&(resp->resp[resp->size]), contents, realSize);
+	resp->size += realSize;
+	resp->resp[resp->size + realSize] = 0;
 
 	return realSize;
 }
