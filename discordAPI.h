@@ -1,0 +1,8 @@
+//
+// Created on 4/07/2018.
+//
+
+#ifndef DISCORDBOT_DISCORDAPI_H
+#define DISCORDBOT_DISCORDAPI_H
+
+#endif //DISCORDBOT_DISCORDAPI_H
