@@ -38,7 +38,7 @@ struct rest_action* rest_action_init(struct rest_action* ra) {
 	return ra;
 }
 
-static char* build_url(char* endpoint) {
+static char* build_url(const char* endpoint) {
 	char* endPointURL = malloc(strlen(API_URL) + strlen(endpoint) +1);
 	endPointURL = strcat(endPointURL, API_URL);
 	endPointURL = strcat(endPointURL, endpoint);
@@ -79,7 +79,7 @@ static void perform_request(CURL* curl) {
 	if(res != CURLE_OK) fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 }
 
-static cJSON* rest_action_get_request(struct rest_action* ra, char* endpoint) {
+static cJSON* rest_action_get_request(struct rest_action* ra, const char* endpoint) {
 	//Build and set target URL
 	char* targetURL = build_url(endpoint);
 	curl_easy_setopt(ra->curl, CURLOPT_URL, targetURL);
@@ -99,27 +99,27 @@ static cJSON* rest_action_get_request(struct rest_action* ra, char* endpoint) {
 	return JSONresp;
 }
 
-static cJSON* rest_action_post_request(struct rest_action* ra, char* endpoint) {
+static cJSON* rest_action_post_request(struct rest_action* ra, const char* endpoint) {
 	printf("--Not yet implemented--\n");
 	return NULL;
 }
 
-static cJSON* rest_action_patch_request(struct rest_action* ra, char* endpoint) {
+static cJSON* rest_action_patch_request(struct rest_action* ra, const char* endpoint) {
 	printf("--Not yet implemented--\n");
 	return NULL;
 }
 
-static cJSON* rest_action_delete_request(struct rest_action* ra, char* endpoint) {
+static cJSON* rest_action_delete_request(struct rest_action* ra, const char* endpoint) {
 	printf("--Not yet implemented--\n");
 	return NULL;
 }
 
-static cJSON* rest_action_put_request(struct rest_action* ra, char* endpoint) {
+static cJSON* rest_action_put_request(struct rest_action* ra, const char* endpoint) {
 	printf("--Not yet implemented--\n");
 	return NULL;
 }
 
-void rest_action_make_request(struct rest_action* ra, char* endpoint, restActionHeader httpHeader) {
+void rest_action_make_request(struct rest_action* ra, const char* endpoint, const restActionHeader httpHeader) {
 	if (!ra) { fprintf(stderr, "trying to make request with NULL rest_action"); return; }
 	if (!endpoint) { fprintf(stderr, "trying to make request with invalid endpoint"); return; }
 
@@ -128,7 +128,7 @@ void rest_action_make_request(struct rest_action* ra, char* endpoint, restAction
 	}
 
 	cJSON* JSONresp = NULL;
-	cJSON* (*rest_action_requests[])(struct rest_action*,char*) = {
+	cJSON* (*rest_action_requests[])(struct rest_action*,const char*) = {
 			rest_action_get_request,	//GET request
 			rest_action_post_request,	//POST request
 			rest_action_patch_request,	//PATCH request

@@ -28,6 +28,6 @@ struct rest_action {
 
 struct rest_action* rest_action_init(struct rest_action* ra);
 
-void rest_action_make_request(struct rest_action* ra, char* endpoint, restActionHeader httpHeader);
+void rest_action_make_request(struct rest_action* ra, const char* endpoint, const restActionHeader httpHeader);
 
 void rest_action_cleanup(struct rest_action* ra);
