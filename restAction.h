@@ -10,8 +10,6 @@
 #include <curl/curl.h>
 #include "cJSON.h"
 
-#endif //DISCORDBOT_RESTACTION_H
-
 typedef enum {
 	RESTACTION_GET,
 	RESTACTION_POST,
@@ -31,3 +29,5 @@ struct rest_action* rest_action_init(struct rest_action* ra);
 void rest_action_make_request(struct rest_action* ra, const char* endpoint, const restActionHeader httpHeader);
 
 void rest_action_cleanup(struct rest_action* ra);
+
+#endif //DISCORDBOT_RESTACTION_H
