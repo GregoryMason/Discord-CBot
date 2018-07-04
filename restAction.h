@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
+#include "cJSON.h"
 
 #endif //DISCORDBOT_RESTACTION_H
 
@@ -16,7 +17,8 @@ typedef enum {
 	RESTACTION_POST,
 	RESTACTION_PATCH,
 	RESTACTION_DELETE,
-	RESTACTION_PUT
+	RESTACTION_PUT,
+	RESTACTION_HEADER_COUNT //Number of headers rest action uses
 } restActionHeader;
 
 struct rest_action {

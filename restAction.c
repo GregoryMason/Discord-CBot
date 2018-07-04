@@ -79,7 +79,7 @@ static void perform_request(CURL* curl) {
 	if(res != CURLE_OK) fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 }
 
-static void rest_action_get_request(struct rest_action* ra, char* endpoint) {
+static cJSON* rest_action_get_request(struct rest_action* ra, char* endpoint) {
 	//Build and set target URL
 	char* targetURL = build_url(endpoint);
 	curl_easy_setopt(ra->curl, CURLOPT_URL, targetURL);
@@ -94,47 +94,52 @@ static void rest_action_get_request(struct rest_action* ra, char* endpoint) {
 	//Run request
 	perform_request(ra->curl);
 
-	printf("%s\n", response.resp);
+	cJSON* JSONresp = cJSON_Parse(response.resp);
+	free(response.resp);
+	return JSONresp;
 }
 
-static void rest_action_post_request(struct rest_action* ra, char* endpoint) {
+static cJSON* rest_action_post_request(struct rest_action* ra, char* endpoint) {
 	printf("--Not yet implemented--\n");
+	return NULL;
 }
 
-static void rest_action_patch_request(struct rest_action* ra, char* endpoint) {
+static cJSON* rest_action_patch_request(struct rest_action* ra, char* endpoint) {
 	printf("--Not yet implemented--\n");
+	return NULL;
 }
 
-static void rest_action_delete_request(struct rest_action* ra, char* endpoint) {
+static cJSON* rest_action_delete_request(struct rest_action* ra, char* endpoint) {
 	printf("--Not yet implemented--\n");
+	return NULL;
 }
 
-static void rest_action_put_request(struct rest_action* ra, char* endpoint) {
+static cJSON* rest_action_put_request(struct rest_action* ra, char* endpoint) {
 	printf("--Not yet implemented--\n");
+	return NULL;
 }
 
 void rest_action_make_request(struct rest_action* ra, char* endpoint, restActionHeader httpHeader) {
 	if (!ra) { fprintf(stderr, "trying to make request with NULL rest_action"); return; }
 	if (!endpoint) { fprintf(stderr, "trying to make request with invalid endpoint"); return; }
 
-	switch (httpHeader) {
-		case RESTACTION_GET:
-			rest_action_get_request(ra, endpoint);
-			break;
-		case RESTACTION_POST:
-			rest_action_post_request(ra, endpoint);
-			break;
-		case RESTACTION_PATCH:
-			rest_action_patch_request(ra, endpoint);
-			break;
-		case RESTACTION_DELETE:
-			rest_action_delete_request(ra, endpoint);
-			break;
-		case RESTACTION_PUT:
-			rest_action_put_request(ra, endpoint);
-			break;
-		default:
-			fprintf(stderr, "Unrecognised header for request: %d\n", httpHeader);
+	if (httpHeader < 0 || httpHeader >= RESTACTION_HEADER_COUNT) {
+		fprintf(stderr, "Unrecognised header for request: %d\n", httpHeader);return;
+	}
+
+	cJSON* JSONresp = NULL;
+	cJSON* (*rest_action_requests[])(struct rest_action*,char*) = {
+			rest_action_get_request,	//GET request
+			rest_action_post_request,	//POST request
+			rest_action_patch_request,	//PATCH request
+			rest_action_delete_request,	//DELETE request
+			rest_action_put_request		//PUT request
+	};
+	JSONresp = rest_action_requests[httpHeader](ra, endpoint);
+
+	if (JSONresp != NULL) {
+		printf("%s\n", cJSON_Print(JSONresp));
+		cJSON_Delete(JSONresp);
 	}
 }
 
