@@ -5,6 +5,8 @@
 #ifndef DISCORDBOT_DISCORDAPI_H
 #define DISCORDBOT_DISCORDAPI_H
 
+
+#include <string.h>
 #include "restAction.h"
 
 #ifdef APIROUTE
