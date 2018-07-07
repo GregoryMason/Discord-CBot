@@ -61,3 +61,7 @@ static char* build_api_route(dAPIRoute routeCode) {
 
 	return route;
 }
+
+static restActionHeader read_api_header(dAPIRoute routeCode) {
+	return (restActionHeader) (routeCode >> 28);
+}
