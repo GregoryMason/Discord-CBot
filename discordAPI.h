@@ -31,9 +31,9 @@ typedef enum {
 	APIROUTE(APPS_GET_APPLICATION,GET,5,1,0,0),					// oauth2/applications/{application_id}
 	APIROUTE(APPS_MODIFY_APPLICATION,PUT,5,1,0,0),				// oauth2/applications/{application_id}
 	APIROUTE(APPS_DELETE_APPLICATION,DELETE,5,1,0,0),			// oauth2/applications/{application_id}
-	APIROUTE(APPS_CREATE_BOT,POST,5,1,2,0),						// oauth2/applications/{application_id}/bot
-	APIROUTE(APPS_RESET_APPLICATION_SECRET,POST,5,1,3,0),		// oauth2/applications/{application_id}/reset
-	APIROUTE(APPS_RESET_BOT_TOKEN,POST,5,1,2,1),				// oauth2/applications/{application_id}/bot/reset
+	APIROUTE(APPS_CREATE_BOT,POST,5,1,3,0),						// oauth2/applications/{application_id}/bot
+	APIROUTE(APPS_RESET_APPLICATION_SECRET,POST,5,1,4,0),		// oauth2/applications/{application_id}/reset
+	APIROUTE(APPS_RESET_BOT_TOKEN,POST,5,1,3,1),				// oauth2/applications/{application_id}/bot/reset
 	APIROUTE(APPS_GET_AUTHORIZED_APPLICATIONS,GET,6,0,0,0),		// oauth2/tokens
 	APIROUTE(APPS_GET_AUTHORIZED_APPLICATION,GET,6,1,0,0),		// oauth2/tokens/{auth_id}
 	APIROUTE(APPS_DELETE_AUTHORIZED_APPLICATION,DELETE,6,1,0,0),// oauth2/tokens/{auth_id}
@@ -77,7 +77,7 @@ typedef enum {
 	APIROUTE(GUILDS_BAN,PUT,11,14,1,0),							// guilds/{guild_id}/bans/{user_id}
 	APIROUTE(GUILDS_KICK_MEMBER,DELETE,11,15,1,0),				// guilds/{guild_id}/members/{user_id}
 	APIROUTE(GUILDS_MODIFY_MEMBER,PATCH,11,15,1,0),				// guilds/{guild_id}/members/{user_id}
-	APIROUTE(GUILDS_MODIFY_SELF_NICK,PATCH,11,15,2,0),			// guilds/{guild_id}/members/@me/nick
+	APIROUTE(GUILDS_MODIFY_SELF_NICK,PATCH,11,15,2,2),			// guilds/{guild_id}/members/@me/nick
 	APIROUTE(GUILDS_PRUNABLE_COUNT,GET,11,16,0,0),				// guilds/{guild_id}/prune
 	APIROUTE(GUILDS_PRUNE_MEMBERS,POST,11,16,0,0),				// guilds/{guild_id}/prune
 	APIROUTE(GUILDS_GET_WEBHOOKS,GET,11,17,0,0),				// guilds/{guild_id}/webhooks
@@ -90,14 +90,14 @@ typedef enum {
 	APIROUTE(GUILDS_CREATE_INTEGRATION,POST,11,22,0,0),			// guilds/{guild_id}/integrations
 	APIROUTE(GUILDS_DELETE_INTEGRATION,DELETE,11,22,1,0),		// guilds/{guild_id}/integrations/{integration_id}
 	APIROUTE(GUILDS_MODIFY_INTEGRATION,PATCH,11,22,1,0),		// guilds/{guild_id}/integrations/{integration_id}
-	APIROUTE(GUILDS_SYNC_INTEGRATION,POST,11,22,1,2),			// guilds/{guild_id}/integrations/{integration_id}/sync
-	APIROUTE(GUILDS_ADD_MEMBER_ROLE,PUT,11,15,1,3),				// guilds/{guild_id}/members/{user_id}/roles/{role_id}
-	APIROUTE(GUILDS_REMOVE_MEMBER_ROLE,DELETE,11,15,1,3),		// guilds/{guild_id}/members/{user_id}/roles/{role_id}
+	APIROUTE(GUILDS_SYNC_INTEGRATION,POST,11,22,1,3),			// guilds/{guild_id}/integrations/{integration_id}/sync
+	APIROUTE(GUILDS_ADD_MEMBER_ROLE,PUT,11,15,1,4),				// guilds/{guild_id}/members/{user_id}/roles/{role_id}
+	APIROUTE(GUILDS_REMOVE_MEMBER_ROLE,DELETE,11,15,1,4),		// guilds/{guild_id}/members/{user_id}/roles/{role_id}
 	//Client Only
 	APIROUTE(GUILDS_CREATE_GUILD,POST,10,0,0,0),				// guilds
 	APIROUTE(GUILDS_DELETE_GUILD,POST,11,23,0,0),				// guilds/{guild_id}/delete
 	APIROUTE(GUILDS_ACK_GUILD,POST,11,24,0,0),					// guilds/{guild_id}/ack
-	APIROUTE(GUILDS_MODIFY_NOTIFICATION_SETTINGS,POST,7,4,1,4),	// users/@me/guilds/{guild_id}/settings
+	APIROUTE(GUILDS_MODIFY_NOTIFICATION_SETTINGS,POST,7,4,1,5),	// users/@me/guilds/{guild_id}/settings
 
 	/* Emotes */
 	//Client Only
@@ -113,8 +113,8 @@ typedef enum {
 	APIROUTE(WEBHOOK_MODIFY_WEBHOOK,PATCH,12,0,0,0),			// webhooks/{webhook_id}
 	APIROUTE(WEBHOOK_MODIFY_TOKEN_WEBHOOK,PATCH,12,2,0,0),		// webhooks/{webhook_id}/{token}
 	APIROUTE(WEBHOOK_EXECUTE_WEBHOOK,POST,12,2,0,0),			// webhooks/{webhook_id}/{token}
-	APIROUTE(WEBHOOK_EXECUTE_WEBHOOK_SLACK,POST,12,2,4,0),		// webhooks/{webhook_id}/{token}/slack
-	APIROUTE(WEBHOOK_EXECUTE_WEBHOOK_GITHUB,POST,12,2,5,0),		// webhooks/{webhook_id}/{token}/github
+	APIROUTE(WEBHOOK_EXECUTE_WEBHOOK_SLACK,POST,12,2,5,0),		// webhooks/{webhook_id}/{token}/slack
+	APIROUTE(WEBHOOK_EXECUTE_WEBHOOK_GITHUB,POST,12,2,6,0),		// webhooks/{webhook_id}/{token}/github
 
 	/* Roles */
 	APIROUTE(ROLES_GET_ROLES,GET,11,13,0,0),					// guilds/{guild_id}/roles
@@ -139,8 +139,8 @@ typedef enum {
 	APIROUTE(CHANNELS_GET_RECIPIENT,GET,13,27,1,0),				// channels/{channel_id}/recipients/{user_id}
 	APIROUTE(CHANNELS_ADD_RECIPIENT,PUT,13,27,1,0),				// channels/{channel_id}/recipients/{user_id}
 	APIROUTE(CHANNELS_REMOVE_RECIPIENT,DELETE,13,27,1,0),		// channels/{channel_id}/recipients/{user_id}
-	APIROUTE(CHANNELS_START_CALL,POST,13,28,6,0),				// channels/{channel_id}/call/ring
-	APIROUTE(CHANNELS_STOP_CALL,POST,13,28,7,0),				// channels/{channel_id}/call/stop_ringing
+	APIROUTE(CHANNELS_START_CALL,POST,13,28,7,0),				// channels/{channel_id}/call/ring
+	APIROUTE(CHANNELS_STOP_CALL,POST,13,28,8,0),				// channels/{channel_id}/call/stop_ringing
 
 	/* Messages */
 	APIROUTE(MESSAGES_SEND_MESSAGE,POST,13,29,0,0),				// channels/{channel_id}/messages
@@ -149,17 +149,17 @@ typedef enum {
 	APIROUTE(MESSAGES_GET_PINNED_MESSAGES,GET,13,30,0,0),		// channels/{channel_id}/pins
 	APIROUTE(MESSAGES_ADD_PINNED_MESSAGE,PUT,13,30,1,0),		// channels/{channel_id}/pins/{message_id}
 	APIROUTE(MESSAGES_REMOVE_PINNED_MESSAGE,DELETE,13,30,1,0),	// channels/{channel_id}/pins/{message_id}
-	APIROUTE(MESSAGES_ADD_REACTION,PUT,13,29,1,9),				// channels/{channel_id}/messages/{message_id}/reactions/{reaction_code}/@me
-	APIROUTE(MESSAGES_REMOVE_OWN_REACTION,DELETE,13,29,1,9),	// channels/{channel_id}/messages/{message_id}/reactions/{reaction_code}/@me
-	APIROUTE(MESSAGES_REMOVE_REACTION,DELETE,13,29,1,8),		// channels/{channel_id}/messages/{message_id}/reactions/{reaction_code}/{user_id}
-	APIROUTE(MESSAGES_REMOVE_ALL_REACTIONS,DELETE,13,29,1,6),	// channels/{channel_id}/messages/{message_id}/reactions
-	APIROUTE(MESSAGES_GET_REACTION_USERS,GET,13,29,1,7),		// channels/{channel_id}/messages/{message_id}/reactions/{reaction_code}
+	APIROUTE(MESSAGES_ADD_REACTION,PUT,13,29,1,10),				// channels/{channel_id}/messages/{message_id}/reactions/{reaction_code}/@me
+	APIROUTE(MESSAGES_REMOVE_OWN_REACTION,DELETE,13,29,1,10),	// channels/{channel_id}/messages/{message_id}/reactions/{reaction_code}/@me
+	APIROUTE(MESSAGES_REMOVE_REACTION,DELETE,13,29,1,9),		// channels/{channel_id}/messages/{message_id}/reactions/{reaction_code}/{user_id}
+	APIROUTE(MESSAGES_REMOVE_ALL_REACTIONS,DELETE,13,29,1,7),	// channels/{channel_id}/messages/{message_id}/reactions
+	APIROUTE(MESSAGES_GET_REACTION_USERS,GET,13,29,1,8),		// channels/{channel_id}/messages/{message_id}/reactions/{reaction_code}
 	APIROUTE(MESSAGES_GET_MESSAGE_HISTORY,GET,13,29,0,0),		// channels/{channel_id}/messages
 	//Bot Only
 	APIROUTE(MESSAGES_GET_MESSAGE,GET,13,29,1,0),				// channels/{channel_id}/messages/{message_id}
-	APIROUTE(MESSAGES_DELETE_MESSAGES,POST,13,29,8,0),			// channels/{channel_id}/messages/bulk-delete
+	APIROUTE(MESSAGES_DELETE_MESSAGES,POST,13,29,9,0),			// channels/{channel_id}/messages/bulk-delete
 	//Client Only
-	APIROUTE(MESSAGES_ACK_MESSAGE,POST,13,29,1,5),				// channels/{channel_id}/messages/{message_id}/ack
+	APIROUTE(MESSAGES_ACK_MESSAGE,POST,13,29,1,6),				// channels/{channel_id}/messages/{message_id}/ack
 
 	/* Invites */
 	APIROUTE(INVITES_GET_INVITE,GET,14,0,0,0),					// invites/{code}

@@ -28,19 +28,19 @@ static char* URLDir1[] = {
 		"invites"													/*    31 Invites								*/
 };
 static char* URLDir2[] = {
-		NULL,"%d","@me",		/* 0-1 Generic: NULL,{id},@me	*/
-		"bot","reset",			/* 2-3 Misc						*/
-		"slack","github",		/* 4-5 Webhooks					*/
-		"ring","stop_ringing",	/* 6-7 Channels					*/
-		"bulk-delete"			/*   8 Messages					*/
+		NULL,"%d","@me",		/* 0-2 Generic: NULL,{id},@me	*/
+		"bot","reset",			/* 3-4 Misc						*/
+		"slack","github",		/* 5-6 Webhooks					*/
+		"ring","stop_ringing",	/* 7-8 Channels					*/
+		"bulk-delete"			/*   9 Messages					*/
 };
 static char* URLDir3[] = {
-		NULL,								/*   0 Generic				*/
-		"reset",							/*   1 Misc					*/
-		"sync","roles/%d","settings",		/* 2-4 Guilds				*/
-		"ack","reactions",					/* 5-6 Messages				*/
-		"reactions/%s",						/*   7 Messages/reactions	*/
-		"reactions/%s/%d","reactions/%s/@me"/* 8-9 Messages/reactions	*/
+		NULL,								/*    0 Generic				*/
+		"reset",							/*    1 Misc				*/
+		"nick","sync","roles/%d","settings",/* 2- 5 Guilds				*/
+		"ack","reactions",					/* 6- 7 Messages			*/
+		"reactions/%s",						/*    8 Messages/reactions	*/
+		"reactions/%s/%d","reactions/%s/@me"/* 9-10 Messages/reactions	*/
 };
 //Used for quick access to piece together the URL endpoint for route
 static char** URLDirParts[] = {URLDir0, URLDir1, URLDir2, URLDir3};
