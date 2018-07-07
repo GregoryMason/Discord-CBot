@@ -169,4 +169,6 @@ typedef enum {
 	APIROUTE(INVITES_CREATE_INVITE,POST,13,31,0,0)				// channels/{channel_id}/invites
 } dAPIRoute;
 
+void dapi_get_guilds();
+
 #endif //DISCORDBOT_DISCORDAPI_H

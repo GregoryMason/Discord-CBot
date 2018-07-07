@@ -65,3 +65,15 @@ static char* build_api_route(dAPIRoute routeCode) {
 static restActionHeader read_api_header(dAPIRoute routeCode) {
 	return (restActionHeader) (routeCode >> 28);
 }
+
+
+void dapi_get_guilds() {
+	struct rest_action* restAction = NULL;
+	restAction = rest_action_init(restAction);
+
+	char* route = build_api_route(DAPI_ROUTE_SELF_GET_GUILDS);
+	rest_action_make_request(restAction, route, read_api_header(DAPI_ROUTE_SELF_GET_GUILDS));
+
+	rest_action_cleanup(restAction);
+	free(route);
+}
