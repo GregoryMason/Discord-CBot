@@ -3,7 +3,7 @@
 //
 
 #include "restAction.h"
-#define API_URL "https://discordapp.com/api/v6/"
+#define API_URL "https://discordapp.com/api/v6"
 
 static struct curl_slist* build_headers(struct curl_slist* headers) {
 	headers = curl_slist_append(headers, "Accept:");
