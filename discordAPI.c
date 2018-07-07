@@ -9,14 +9,14 @@ static char* URLDir0[] = {
 		"voice/regions","gateway","gateway/bot","track",	/*  1- 4 Misc			*/
 		"oauth2/applications","oauth2/tokens",				/*  5- 6 Applications	*/
 		"users/@me","friend-suggestions",					/*  7- 8 Self			*/
-		"users/%d",											/*     9 Users			*/
-		"guilds","guilds/%d",								/* 10-11 Guilds			*/
-		"webhooks/%d",										/*    12 Webhooks		*/
-		"channels/%d",										/*    13 Channels		*/
+		"users/%ld",										/*     9 Users			*/
+		"guilds","guilds/%ld",								/* 10-11 Guilds			*/
+		"webhooks/%ld",										/*    12 Webhooks		*/
+		"channels/%ld",										/*    13 Channels		*/
 		"invites/%s"										/*    14 Invites		*/
 };
 static char* URLDir1[] = {
-		NULL,"%d","%s","@me",										/*  0- 3 Generic: NULL,{id},{code/token},@me	*/
+		NULL,"%ld","%s","@me",										/*  0- 3 Generic: NULL,{id},{code/token},@me	*/
 		"guilds","channels","settings","connections","mentions",	/*  4- 8 Self									*/
 		"profile","notes",											/*  9-10 User									*/
 		"relationships",											/*    11 Relationships							*/
@@ -28,19 +28,19 @@ static char* URLDir1[] = {
 		"invites"													/*    31 Invites								*/
 };
 static char* URLDir2[] = {
-		NULL,"%d","@me",		/* 0-2 Generic: NULL,{id},@me	*/
+		NULL,"%ld","@me",		/* 0-2 Generic: NULL,{id},@me	*/
 		"bot","reset",			/* 3-4 Misc						*/
 		"slack","github",		/* 5-6 Webhooks					*/
 		"ring","stop_ringing",	/* 7-8 Channels					*/
 		"bulk-delete"			/*   9 Messages					*/
 };
 static char* URLDir3[] = {
-		NULL,								/*    0 Generic				*/
-		"reset",							/*    1 Misc				*/
-		"nick","sync","roles/%d","settings",/* 2- 5 Guilds				*/
-		"ack","reactions",					/* 6- 7 Messages			*/
-		"reactions/%s",						/*    8 Messages/reactions	*/
-		"reactions/%s/%d","reactions/%s/@me"/* 9-10 Messages/reactions	*/
+		NULL,									/*    0 Generic				*/
+		"reset",								/*    1 Misc				*/
+		"nick","sync","roles/%ld","settings",	/* 2- 5 Guilds				*/
+		"ack","reactions",						/* 6- 7 Messages			*/
+		"reactions/%s",							/*    8 Messages/reactions	*/
+		"reactions/%s/%ld","reactions/%s/@me"	/* 9-10 Messages/reactions	*/
 };
 //Used for quick access to piece together the URL endpoint for route
 static char** URLDirParts[] = {URLDir0, URLDir1, URLDir2, URLDir3};
