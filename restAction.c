@@ -12,6 +12,7 @@ static struct curl_slist* build_headers(struct curl_slist* headers) {
 	char* base = "Authorization: Bot "; char* botToken = getenv("token");
 	//Build the auth header
 	char* authHeader = malloc(strlen(base) + strlen(botToken) +1);
+	*authHeader = 0;
 	authHeader = strcat(authHeader, base);
 	authHeader = strcat(authHeader, botToken);
 	//Add it, and clear now redundant copy from heap
@@ -40,6 +41,7 @@ struct rest_action* rest_action_init(struct rest_action* ra) {
 
 static char* build_url(const char* endpoint) {
 	char* endPointURL = malloc(strlen(API_URL) + strlen(endpoint) +1);
+	*endPointURL = 0;
 	endPointURL = strcat(endPointURL, API_URL);
 	endPointURL = strcat(endPointURL, endpoint);
 
