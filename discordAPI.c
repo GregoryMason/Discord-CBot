@@ -66,14 +66,19 @@ static restActionHeader read_api_header(dAPIRoute routeCode) {
 	return (restActionHeader) (routeCode >> 28);
 }
 
-
-void dapi_get_guilds() {
+static void perform_api_call(char* routeURL, restActionHeader requestHeader) {
 	struct rest_action* restAction = NULL;
 	restAction = rest_action_init(restAction);
-
-	char* route = build_api_route(DAPI_ROUTE_SELF_GET_GUILDS);
-	rest_action_make_request(restAction, route, read_api_header(DAPI_ROUTE_SELF_GET_GUILDS));
+	rest_action_make_request(restAction, routeURL, requestHeader);
 
 	rest_action_cleanup(restAction);
+}
+
+
+void dapi_get_guilds() {
+	dAPIRoute routeCode = DAPI_ROUTE_SELF_GET_GUILDS;
+	char* route = build_api_route(routeCode);
+
+	perform_api_call(route, read_api_header(routeCode));
 	free(route);
 }
